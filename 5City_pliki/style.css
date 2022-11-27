@@ -59,6 +59,7 @@
 }
 
 .card-container .card-container-image {
+    height: 500px;
     display: flex;
     justify-content: flex-end;
     float: right;

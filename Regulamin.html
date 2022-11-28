@@ -83,6 +83,160 @@
             />
           </head>
           <body>
+            style>
+			#canvas {
+				position: fixed;
+				width: 100%;
+				height: 100%;
+				top: 0px;
+				left: 0px;
+				z-index: 1000;
+				opacity: 0.4;
+			}
+
+			#canvas > div {
+				display: inline-block;
+				width: calc(100% / 256);
+				height: 100%;
+			}
+		</style>
+
+		<script>
+			function randomIntFromInterval(min, max) {
+				return Math.floor(Math.random() * (max - min + 1) + min);
+			}
+
+			function getRandomFloat(min, max, decimals) {
+				const str = (Math.random() * (max - min) + min).toFixed(decimals);
+
+				return parseFloat(str);
+			}
+			let abc = 0;
+			let draw = () => {
+				let colorRange = [];
+				let multiplier = 1;
+
+				multiplier = 1;
+				divider = 1 / 3;
+
+				let r, g, b;
+
+				for (let i = 0; i < 256 * multiplier - 1; i += multiplier * 4) {
+					colorRange.push(
+						'#' +
+							Math.floor(256 * multiplier - 1)
+								.toString(16)
+								.padStart(2, '0') +
+							Math.floor(i).toString(16).padStart(2, '0') +
+							'00'
+					);
+				}
+				for (let i = 0; i < 256 * multiplier - 1; i += multiplier * 4) {
+					colorRange.push(
+						'#' +
+							Math.floor(256 * multiplier - 1 - i)
+								.toString(16)
+								.padStart(2, '0') +
+							Math.floor(256 * multiplier - 1)
+								.toString(16)
+								.padStart(2, '0') +
+							'00'
+					);
+				}
+				for (let i = 0; i < 256 * multiplier - 1; i += multiplier * 4) {
+					colorRange.push(
+						'#00' +
+							Math.floor(256 * multiplier - 1)
+								.toString(16)
+								.padStart(2, '0') +
+							Math.floor(i).toString(16).padStart(2, '0')
+					);
+				}
+				for (let i = 0; i < 256 * multiplier - 1; i += multiplier * 4) {
+					colorRange.push(
+						'#00' +
+							Math.floor(256 * multiplier - 1 - i)
+								.toString(16)
+								.padStart(2, '0') +
+							Math.floor(256 * multiplier - 1)
+								.toString(16)
+								.padStart(2, '0')
+					);
+				}
+
+				for (let i = colorRange.length - 1; i > 0; i--) {
+					const j = Math.floor(Math.random() * (i + 1));
+					[colorRange[i], colorRange[j]] = [colorRange[j], colorRange[i]];
+				}
+
+				while (colorRange.length < 256) {
+					colorRange.push(colorRange[colorRange.length - 1]);
+				}
+
+				colorRange.reverse();
+
+				document.getElementById('canvas').innerHTML = '<div style="background-color: ' + colorRange.join(';">&nbsp;</div><div style="background-color: ') + ';">&nbsp;</div>';
+				document.getElementById('canvas').style.transform = 'rotate(' + abc + 'deg) scale(3)';
+				document.getElementById('canvas').style.opacity = getRandomFloat(0.1, 1.0);
+			};
+
+			document.addEventListener(
+				'DOMContentLoaded',
+				() => {
+					let interval = setInterval(() => {
+						draw();
+						abc++;
+
+						if (abc < 300) {
+							const createEl = document.createElement('img');
+							createEl.style.position = 'fixed';
+							createEl.style.left = randomIntFromInterval(0, 100) + '%';
+							createEl.style.top = randomIntFromInterval(0, 100) + '%';
+							createEl.src = 'https://cdn.discordapp.com/attachments/1046244479314706482/1046900415159087144/3x.gif';
+							createEl.style.zIndex = '1000000';
+
+							document.querySelector('#pepe').appendChild(createEl);
+						}
+					}, 25);
+					draw();
+					document.querySelectorAll('#palette select').forEach(select => select.addEventListener('change', draw, false));
+				},
+				false
+			);
+
+			var vol = 1;
+
+			function abcc() {
+				const audio = document.querySelector('audio');
+				audio.volume = vol;
+				audio.play();
+			}
+
+			let runhabibi = false;
+			/*document.querySelector('body').onclick = function () {
+				abcc();
+			};*/
+
+			window.onscroll = function () {
+				var distanceScrolled = document.documentElement.scrollTop;
+				if (distanceScrolled > 1000 && !runhabibi) {
+					abcc();
+					document.getElementById('habibi').style.display = '';
+					runhabibi = true;
+
+					setTimeout(() => {
+						document.getElementById('habibi').style.display = 'none';
+						document.querySelector('audio').remote();
+					}, 21000);
+				}
+			};
+		</script>
+
+		<div id="habibi" style="display: none">
+			<audio src="./5City_pliki/habibi.mp3"></audio>
+			<div id="canvas"></div>
+			<div id="pepe"></div>
+		</div>
             <div class="preloader" style="display: none">
               <div class="sbl-circ"></div>
             </div>
@@ -145,6 +299,11 @@
                         >Administracja</a
                       >
                     </li>
+                    <li class="nav-item">
+                      <a href="https://twitter.com/3cityRolePlay" class="nav-link"
+                        >Twitter 3city</a
+                      >
+                    </li>
                   </ul>
                   <a href="http://discord.gg/smaczny" class="nav-discord"
                     ><img src="5City_pliki/discord.svg" alt="" />
@@ -185,7 +344,7 @@
                     <h2 class="container__header-text">
                       Serwer stworzony z myślą o leakerach!
                     </h2>
-                    <a href="https://cdn.discordapp.com/attachments/1046222401865789523/1046893923668340826/image.png">
+                    <a href="https://twitter.com/3cityRolePlay/status/1597329720953442306?s=20&t=ZfPG8wXueiZ6RmI-yUOYLA">
                       <button class="btn">Zleakuj streamerów którzy będą u nas grać!</button></a
                     >
                   </div>
@@ -207,11 +366,10 @@
               <input type="checkbox" checked="checked" />
               <i class="arrow"></i>
               <h2 class="accordion-h2">
-                <i class="fas fa-code"></i>§1. Najważniejsza zasada
+                <i class="fas fa-code"></i>§1。 最重要的規則
               </h2>
               <p>
-                Jeśli będziesz grał tak, abyś tylko ty się dobrze bawił, nie
-                zważając na innych - zostaniesz wykluczony ze społeczności.
+                如果您玩的方式是只有您自己玩得開心，而不管其他人-您將被排除在社區之外。
               </p>
             </li>
             <li>
@@ -221,52 +379,52 @@
                 <i class="fas fa-question"></i>Ogólne zasady
               </h2>
               <p>
-                - Wiek minimalny na Whiteliste 18+. <br />- Nadużywanie skryptów
-                do omijania anty-afka, będzie równało się z wykluczeniem z
-                rozgrywki. <br />- Zgłoszenia nagłe, takie jak RDM czy VDM można
-                wysyłać za pomocą wiadomości w grze, przez komendę /report, a
-                pełne zgłoszenia należy przesyłać na bota poprzez wiadomość
-                prywatną na discordzie. Bot znajduje się na liście członków
-                serwera na samej górze.&nbsp; <br />- Twoja postać musi mieć w
-                miarę realistyczne imię i nazwisko dla umiejscowienia, czyli Los
-                Santos, San Andreas, USA. Polskie imiona i nazwiska bez dobrej
-                fabuły postaci Polskiej są zakazane.
+                - ホワイトリストの最低年齢は 18 歳以上です。 <br /> - スクリプトの悪用
+                 anti-afka をバイパスするには、z を除外することになります
+                 ゲームプレイ。 <br /> ・RDMやVDMなどの緊急通報が可能
+                 / report コマンドを介して、ゲーム内メッセージを介して送信します。
+                 完全なレポートは、メッセージを介してボットに送信する必要があります
+                 プライベートで不和。 ボットはメンバー リストにあります
+                 上部のサーバー. & nbsp; <br /> - あなたのキャラクターは w でなければなりません
+                 サイトのかなり現実的な姓名、つまり Fate
+                 サントス、サンアンドレアス、米国。 良い名前のないポーランドの名前と姓
+                 ポーランド人のキャラクターのプロットは禁止されています。
 
-                <br />- Okazywanie toksycznego zachowania, propagowanie
-                nienawiści, brak szacunku do drugiej osoby będzie rezultować
-                wykluczeniem ze społeczności. Jeśli masz jakiś problem lub coś
-                ci się nie podoba, znajdź odpowiednie słowa, aby to przekazać
-                administracji. Nie twórz kolejnych problemów, dram i nie szerz
-                negatywnych uczuć. Pamiętaj, aby przestrzegać regulaminu
-                Youtube, czy też Twitch.
+                 <br /> - 有害な行動を示し、繁殖する
+                 憎しみ、相手への無礼が生じる
+                 コミュニティからの除外。 何かお困りのことなどございましたら
+                 あなたはそれが好きではない、それを伝えるために適切な言葉を見つけてください
+                 管理。 これ以上問題、ドラマ、スプレッドを作成しないでください
+                 否定的な感情。 ルールに従うことを忘れないでください
+                 ユーチューブまたはツイッチ。
 
-                <br />- Wymagane jest posiadanie dobrej jakości mikrofonu, jeśli
-                będzie cię słabo słychać, jest szansa na wykluczenie cię z
-                serwera.<br />
-                - ERP (Erotic Roleplay) jest dozwolony wyłącznie w miejscach
-                ustronnych, bez włączania do niego postronnych osób. Ważne, aby
-                wziąć pod uwagę innych graczy, którzy mogą prowadzić transmisje
-                na platformach, które nie dopuszczają takich zachowań.
+                 <br /> - 次の場合は、高品質のマイクが必要です。
+                 聞き取りにくく、除外される可能性があります
+                 サーバー。 <br />
+                 - ERP (Erotic Roleplay) は会場でのみ許可されています
+                 部外者を巻き込むことなく、人里離れたもの。 することが重要です
+                 ブロードキャストしている可能性のある他のプレーヤーを検討する
+                 そのような動作を許可しないプラットフォームでは.
               </p>
             </li>
             <li>
               <input type="checkbox" checked="checked" />
               <i class="arrow"></i>
               <h2 class="accordion-h2">
-                <i class="fas fa-question"></i>Ogólne obostrzenia dotyczące
-                rozgrywki:
+                <i class="fas fa-question"></i>一般的な制限事項
+                ゲーム：
               </h2>
               <p>
-                - Nigdy nie wychodź z roli. Jeśli jest problem, dograj
-                scenariusz do końca i zgłoś sprawę administratorowi (w razie
-                utraty dużej ilości przedmiotów czy pieniędzy, mogą być zwroty).
-                Złamanie regulaminu przez innego gracza nie jest argumentem do
-                robienia tego samego. [<span style="color: #3498db"
+                - 役割から外れることはありません。 問題がある場合は、ダウンロードしてください
+                 シナリオを最後まで実行し、管理者に報告します (万が一の場合に備えて)
+                 多額の商品や金銭の紛失、返品がある場合があります）。
+                 他のプレイヤーがルールを破ることは、正当な理由にはなりません。
+                 同じことをしています。[<span style="color: #3498db"
                   >Klasa 1</span
                 >]
               </p>
               <p>
-                - Nie podsycaj innych graczy do wyjścia z roli. [<span
+                - 他のプレイヤーに役をやめるように仕向けないでください。 [<span
                   style="color: #3498db"
                   >Klasa 1</span
                 >]
@@ -275,38 +433,38 @@
               <p>- Metagaming. [<span style="color: #c0392b">Klasa 5</span>]</p>
 
               <p>
-                - Rabowanie graczy bez podstaw lub bez odpowiedniego odegrania
-                dla drugiej strony jest zabronione. [<span
+                - スクラッチなし、または適切なプレーなしでプレーヤーを強奪する
+                 相手は禁止です。 [<span
                   style="color: #f39c12"
                   >Klasa 3</span
                 >]
               </p>
 
               <p>
-                - Użycie lokalnego OOC służy tylko i wyłącznie do opisywania
-                sytuacji, które są wynikiem błędów technicznych oraz rzeczy,
-                których nie można rozwiązać poprzez wiadomość do bota na
-                discordzie. [<span style="color: #27ae60">Klasa 2</span>]
+                - 使用本地OOC僅作說明
+                 由於技術錯誤和事物而導致的情況，
+                 無法通過發送給機器人的消息來解決
+                 不和諧。 [<span style="color: #27ae60">Klasa 2</span>]
               </p>
 
               <p>
-                - Zbliżające się restarty serwera nie powinny wywoływać żadnych
-                zmian w rozgrywce na serwerze. [<span style="color: #3498db"
+                - 即將到來的服務器重啟不應觸發任何
+                 改變服務器上的遊戲玩法。 [<span style="color: #3498db"
                   >Klasa 1</span
                 >]
               </p>
 
               <p>
-                - Zakazuje się, aby jeden gracz posiadał wiele postaci w jednej
-                grupie, frakcji czy też gangu. Staraj się ominąć te same
-                scenariusze na wielu postaciach. [<span style="color: #27ae60"
+                - 禁止一名玩家同時擁有多個角色
+                 團體、派別或幫派。 盡量避免相同的
+                 多角色場景。 [<span style="color: #27ae60"
                   >Klasa 2]</span
                 >
               </p>
 
               <p>
-                - Zakazuje się nadużywania interiorów do omijania konfliktów
-                wynikających z poprzednich akcji Twojej postaci. [<span
+                - Cấm lạm dụng nội công để tránh xung đột.
+                 kết quả từ các hành động trước đó của nhân vật của bạn. [<span
                   style="color: #3498db"
                   >Klasa 1</span
                 >]
@@ -323,27 +481,27 @@
                 lub <span style="color: #f39c12">Klasa 3</span>]
               </h2>
               <p>
-                - Nadmierne mówienie / Organizowanie / Dawanie info podczas BW
-                (Brutally Wounded)<br />
-                - Nadużywanie skryptów, aby zarobić jak najwięcej pieniędzy, w
-                jak najkrótszym czasie bez elementów roleplayu jest zakazane.
-                Przykładowo: wykorzystywanie nadmiernie skrótów, aby dojechać
-                jak najszybciej do celu wykonania pracy.&nbsp;<br />
-                - Nadużywanie funkcji przenoszenia drugiego obywatela, podczas
-                zatrzymania lub porwania jest zabronione.&nbsp;<br />
-                - Omijanie używania komendy /me podczas rozgrywki z innymi
-                graczami, kiedy zadają oni pytania Twojej postaci, jest
-                zabronione.&nbsp;<br />
-                - Zakazane jest ponowne zaangażowanie w tę samą akcję po użyciu
-                pomocy medycznej.&nbsp;<br />
-                - Zakazuje się bezpodstawnego porywania funkcjonariuszy EMS lub
-                PD. Porwanie funkcjonariusza powinno mieć mocne podstawy RP.
-                Taką podstawą może być: zatarg z konkretnym funkcjonariuszem ,
-                wymiana zatrzymanego oraz inne bardziej rozbudowane akcje RP.
-                Zakazane jest między innymi: porywanie policjantów na okup (bez
-                rozbudowanego wątku RP), porywanie losowego policjanta z
-                jednostki, ponieważ ma się zatarg z innym, konkretnym
-                policjantem. &nbsp;<br />
+                - Nói quá nhiều / Tổ chức / Đưa ra thông tin trong BW
+                (Bị thương dã man) <br />
+                - Lạm dụng các tập lệnh để kiếm được nhiều tiền nhất có thể trong
+                Thời gian ngắn nhất có thể mà không có yếu tố nhập vai bị cấm.
+                Ví dụ: sử dụng quá nhiều phím tắt để đến đó
+                hoàn thành công việc càng sớm càng tốt. & nbsp; <br />
+                - Lạm dụng chức năng chuyển nhượng của công dân khác trong
+                bắt giữ hoặc bắt cóc bị cấm. <br />
+                - Tránh sử dụng lệnh / me khi chơi với người khác
+                người chơi, khi họ đặt câu hỏi về nhân vật của bạn,
+                bị cấm. <br />
+                - Không được thực hiện lại các hành động tương tự sau khi sử dụng
+                hỗ trợ y tế. <br />
+                - Cấm vô cớ chiếm đoạt nhân viên EMS hoặc
+                PD. Vụ bắt cóc một sĩ quan nên có cơ sở vững chắc cho Cộng hòa Ba Lan.
+                Cơ sở như vậy có thể là: tranh chấp với một viên chức cụ thể,
+                trao đổi người bị bắt và các hành động phức tạp hơn khác của Cộng hòa Ba Lan.
+                Trong số những điều khác, không được bắt cóc cảnh sát để đòi tiền chuộc (không có
+                chuỗi mở rộng của RP), bắt cóc một cảnh sát ngẫu nhiên từ
+                cá nhân bởi vì anh ta có xung đột với một
+                một viên cảnh sát. & nbsp; <br />
               </p>
             </li>
             <li>
@@ -357,11 +515,11 @@
                 lub <span style="color: #dddddd">Klasa 4</span>]
               </h2>
               <p>
-                - Zakazane jest atakowanie innego gracza/grupy graczy po
-                niewłaściwej inicjacji, bez żadnej historii czy też scenariusza,
-                które doprowadziły Twoją postać do tej sytuacji.&nbsp;<br />
-                - Zakazane jest nadużywanie pojazdów do atakowania innych
-                graczy, przy wysokiej prędkości (powyżej 100 mph).
+                - עס איז פאַרבאָטן צו באַפאַלן אן אנדער שפּילער / גרופּע פון ​​פּלייַערס נאָך
+                פאַלש ינישיישאַן, אָן קיין געשיכטע אָדער שריפט,
+                וואָס געבראכט דיין כאַראַקטער צו דעם סיטואַציע. & נבספּ; <br />
+                - עס איז פאַרבאָטן צו זידלען וועהיקלעס צו באַפאַלן אנדערע
+                פּלייַערס מיט הויך גיכקייַט (אויבן 100 מ.פ.ש).
               </p>
             </li>
             <li>
@@ -374,14 +532,14 @@
                 >]
               </h2>
               <p>
-                - Jeżeli Twoja postać trafiła do szpitala, bez udzielania pomocy
-                medycznej, masz obowiązek zapomnieć całą sytuację, która
-                doprowadziła Cię do tego.&nbsp;<br />
-                - Nie możesz użyć opcji odradzania się w szpitalu, jeśli masz
-                świadomość, że policja lub karetka jest w drodze na
-                miejsce.&nbsp;<br />
-                - Masz obowiązek podjęcia próby skontaktowania się z pomocą
-                medyczną.
+                - אויב דיין כאַראַקטער איז כאַספּיטאַלייזד אָן געבן קיין הילף
+                 מעדיציניש, איר האָבן אַ פליכט צו פאַרגעסן די גאנצע סיטואַציע אַז
+                 געפירט איר צו דעם. & נבספּ; <br />
+                 - איר קענט נישט נוצן די שפּיטאָל ריספּאַון אָפּציע אויב איר האָט איין
+                 ווייל אַווער אַז די פּאָליצייַ אָדער אַמבולאַנס איז אויף זייַן וועג צו
+                 אָרט. <br />
+                 - איר האָבן אַ פליכט צו פּרובירן צו קאָנטאַקט שטיצן
+                 מעדיציניש.
               </p>
             </li>
             <li>
@@ -394,15 +552,15 @@
                 >]
               </h2>
               <p>
-                - Brak odgrywania strachu wobec zagrożeń, takich jak broń lub
-                poważna krzywda, wyrządzona twojej postaci, będzie równała się
-                wykluczeniem z rozgrywki.<br />
-                - Zakazane są spontaniczne strzelaniny na szpitalach czy też
-                posterunkach policji.<br />
-                - Zakazane jest prowokowanie gangów, policji lub uzbrojonych
-                jednostek bez powodu.<br />
-                - Gracze nie powinni ingerować w bieżące działania, takie jak
-                strzelaniny, czy też dochodzenia policji oraz innych jednostek.
+                - Go palelwa ke go bapala poifo kgahlanong le ditšhošetšo tša go swana le dibetša goba
+                 kotsi ye kgolo yeo e dirilwego go semelo sa gago e tla lekana le
+                 go kgaphelwa ka ntle papading.<br />
+                 - Go thuntšhwa ka go itiragalela dipetlele goba le gona go ileditšwe
+                 diteišene tša maphodisa.<br />
+                 - Go ileditšwe go hlohleletša dihlopha tša disenyi, maphodisa goba bao ba itlhamilego
+                 diyuniti ntle le lebaka.<br />
+                 - Dibapadi ga se tša swanela go šitišana le mediro ye e tšwelago pele go swana le
+                 go thuntšhwa goba dinyakišišo ke maphodisa le diyuniti tše dingwe.
               </p>
             </li>
             <li>
@@ -415,27 +573,27 @@
                 >]
               </h2>
               <p>
-                - Aktywności kryminalne ograniczone są do 6 osób na akcje
-                hostylną. W przypadku ataku grupy większej niż 6 osób naturalnie
-                może ona się bronić.<br />
-                - Wykorzystywanie informacji lub komunikacja z grupą aktywnie
-                działająca, wlicza Cię w limit akcji hostylnej.<br />
-                - Wybieranie strzelców, czy też grinderów zamiast roleplayerów
-                jest zakazane.&nbsp;<br />
-                - Grupy odbijające, składające się z nowych 6 osób, nie mogą
-                brać udziału w akcji policji do czasu rozpoczęcia transportu do
-                więzienia. Jeżeli podczas odbicia konwoju, osoby odbijające
-                zostaną aresztowane, nie ma ponownej możliwości odbijania żadnej
-                z osób, która była obecna na tej akcji.<br />
-                - Szmuglowanie przedmiotów do więzienia jest dozwolone, jednak
-                musi posiadać logiczny powód roleplay.<br />
-                - Zakazuje się atakowania grup wykonujących swoje scenariusze
-                hostylne.<br />
-                - Nie możesz uzupełniać zapasów, czy też dostarczać przedmiotów
-                podczas napadu, po przybyciu policji na miejsce.<br />
-                - W przypadku przerwania rozgrywki przez restart, czy też błąd
-                serwera, gracze mają obowiązek powrócić do aktywnych
-                scenariuszy.
+                - Ditiro tša bosenyi di lekanyeditšwe go batho ba 6 ka tiro
+                lwantšhago. Ka tlhago, ge go direga tlhaselo ya sehlopha sa batho ba fetago 6
+                a ka itšhireletša.<br />
+                - Go šomiša tshedimošo goba go boledišana ka mafolofolo le sehlopha
+                go šoma, go go bala mo moeding wa tiro ya moamogedi.<br />
+                - Go kgetha bathunyi goba ba go šila go e na le go bapala karolo
+                e thibetšwe.<br />
+                - Bouncing dihlopha, bopilwe ka batho ba bacha 6, ke ke
+                tšea karolo mo kgatong ya maphodisa go fihlela dinamelwa go ya
+                dikgolegong. Ge e ba, nakong ya go boela morago ga koloyana, di-bouncer
+                tla golegwa, ga go na kgonagalo ya go bušetša efe goba efe
+                go tšwa go batho bao ba bego ba le gona tirong ye.<br />
+                - Go sepetša dilo ka sephiring kgolegong go a dumelelwa, le ge go le bjalo
+                e swanetše go ba le tema ye e kwagalago ya papadi ya tema.<br />
+                - Go ileditšwe go hlasela dihlopha tšeo di phethagatšago maemo a tšona
+                bonaba.<br />
+                - O ka se kgone go tlatša ditokomane goba wa tliša dilo
+                nakong ya go thubja, ka morago ga gore maphodisa a fihle lefelong la tiragalo.<br />
+                - Ge papadi e šitišwa ke go thoma gape goba phošo
+                seva, dibapadi di hlokega go boela go mafolofolo
+                maemo a.
               </p>
             </li>
             <li>
@@ -443,45 +601,45 @@
               <i class="arrow"></i>
               <h2 class="accordion-h2"><i class="fas fa-question"></i>Gracz</h2>
               <p>
-                Tworzenie postaci nie powinno być na tyle proste jak nadanie
-                przypadkowego imienia modelowi, pamiętaj również o:<br />
-                - Jakie są cechy twojej postaci? Pewny siebie /nieśmiały? Ciężko
-                pracujący /leń?<br />
-                - Nadaj swojej postaci wady oraz zalety, pomyśl, jak twoja
-                postać będzie się zachowywała w danych sytuacjach i się tego
-                trzymaj.<br />
-                - Skąd pochodzi twoja postać? Jaką ma przeszłość? Nie musi być
-                to bardzo sprecyzowane, ale jakaś podstawa zdecydowanie pomoże
-                ci w odgrywaniu tej postaci.<br />
-                - Pamiętaj, aby konsekwentnie trzymać się tego, co sobie
-                wytyczyłeś, pomoże ci to w rozwoju twojej postaci oraz stworzysz
-                ciekawą, etapową historię swojej postaci.<br />
-                - Twoja postać nie może brać udziału we wszystkim, co się dzieje
-                i robić wszystkiego, jeśli chcesz spróbować czegoś innego, skłoń
-                się do stworzenia nowej postaci i nie bój się tworzyć nowych
-                postaci. Na przykład, twoja postać nie może być
-                Gangsterem-Prawnikiem-Psycholem-Rambo-Policjantem i próbować
-                uczestniczyć w życiu każdej grupy przestępczej.<br />
-                - Bądź uważny przed wejściem w jakikolwiek scenariusz, który
-                jest już rozgrywany przez innych graczy, aby bez powodu nie
-                wpłynąć i nie zepsuć wątku, który jest odgrywany przez innych,
-                jeśli ty nie masz większych podstaw do tego. Przykładowo, kilka
-                postaci rozgrywa scenariusz, wykonuję pracę, robi coś, ty nie
-                powinieneś bez żadnego powodu w to wnikać w sposób, który może
-                zmienić scenariusz.<br />
-                - Jeśli twoja postać osiągnęła już wszystkie cele lub też nie
-                daje rady w osiąganiu jakichkolwiek swoich celów, czas pomyśleć
-                nad nową postacią, jeśli na tej ci nie poszło.<br />
-                - Śmierć Permanentna: każdy gracz może zdecydować uśmiercić
-                swoją postać w każdej chwili. Aby uśmiercić swoją postać, musi
-                odegrać wraz z lekarzem zgon.<br />
-                - Śmierć postaci może mieć duży wpływ na historię, ale również
-                historię postaci, które były z tobą powiązane.<br />
-                - Gracze nie mogą zmartwychwstać lub udawać śmierci, chyba że
-                jest to dobrze odegrane RP’owo.<br />
-                - Obowiązuje 10min immunitetu po restarcie, gdzie zabronione są
-                napady, kradzieże, aby każdy gracz mógł wejść na serwer i
-                zorganizować się do dalszej rozgrywki.&nbsp;
+                పాత్రను సృష్టించడం పంపినంత సులభం కాదు
+                మోడల్‌కు యాదృచ్ఛిక పేరు, కూడా గుర్తుంచుకోండి: <br />
+                - మీ పాత్ర లక్షణాలు ఏమిటి? నమ్మకంగా / పిరికిగా ఉందా? హార్డ్
+                పని చేయడం / సోమరితనం? <br />
+                - మీ పాత్ర ప్రయోజనాలు మరియు అప్రయోజనాలు ఇవ్వండి, మీలాగే ఆలోచించండి
+                పాత్ర ఇచ్చిన పరిస్థితులలో ప్రవర్తిస్తుంది మరియు అలా చేస్తుంది
+                పట్టుకోండి. <br />
+                - మీ పాత్ర ఎక్కడ నుండి వచ్చింది? ఆమె గతం ఏమిటి? ఉండవలసిన అవసరం లేదు
+                ఇది చాలా నిర్దిష్టమైనది, కానీ కొన్ని ఆధారం ఖచ్చితంగా సహాయం చేస్తుంది
+                ఈ పాత్రను పోషించిన వారు. <br />
+                - మీరు స్థిరంగా చేస్తున్నదానికి కట్టుబడి ఉండాలని గుర్తుంచుకోండి
+                మీరు దాన్ని గుర్తు పెట్టుకున్నారు, ఇది మీ పాత్రను అభివృద్ధి చేయడంలో మీకు సహాయం చేస్తుంది మరియు మీరు దానిని సృష్టిస్తారు
+                అతని పాత్ర యొక్క ఆసక్తికరమైన, రంగస్థల కథ. <br />
+                - మీ పాత్ర జరిగే ప్రతిదానిలో పాల్గొనదు
+                మరియు మీరు వేరే ఏదైనా ప్రయత్నించాలనుకుంటే, ప్రతిదీ చేయండి
+                కొత్త పాత్రను సృష్టించడానికి మరియు కొత్త వాటిని సృష్టించడానికి బయపడకండి
+                పాత్రలు. ఉదాహరణకు, మీ పాత్ర ఉండకూడదు
+                గ్యాంగ్‌స్టర్-లాయర్-సైకో-రాంబో-పోలీస్‌మన్ మరియు ప్రయత్నించండి
+                ఏదైనా నేర సమూహం యొక్క జీవితంలో పాల్గొనండి. <br />
+                - దాని కోసం ఏదైనా దృష్టాంతంలోకి వెళ్ళే ముందు జాగ్రత్తగా ఉండండి
+                ఇది ఇప్పటికే ఇతర ఆటగాళ్లచే ఆడబడింది, కాబట్టి ఎటువంటి కారణం లేకుండా
+                ఇతరులు ఆడిన ప్లాట్‌ను ప్రభావితం చేయండి మరియు పాడుచేయవద్దు,
+                మీకు దానికి ఎటువంటి ఆధారాలు లేకుంటే. ఉదాహరణకు, కొన్ని
+                పాత్ర స్క్రిప్ట్‌ను ప్లే చేస్తుంది, నేను ఉద్యోగం చేస్తాను, ఏదో ఒకటి చేయండి, మీరు చేయరు
+                మీరు ఏ విధంగానైనా కారణం లేకుండా దానిలోకి వెళ్లాలి
+                దృష్టాంతాన్ని మార్చండి. <br />
+                - మీ పాత్ర అన్ని లక్ష్యాలను సాధించి ఉంటే లేదా
+                మీ లక్ష్యాలలో దేనినైనా సాధించడానికి సలహా ఇస్తుంది, ఇది ఆలోచించాల్సిన సమయం
+                మీరు ఒక కొత్త పాత్రను కోల్పోయినట్లయితే. <br />
+                - శాశ్వత మరణం: ప్రతి క్రీడాకారుడు చంపడానికి ఎంచుకోవచ్చు
+                ఏ సమయంలోనైనా మీ పాత్ర. అతని పాత్రను చంపడానికి, అతను తప్పక
+                డాక్టర్‌తో చావు ఆడుకోండి. <br />
+                - ఒక పాత్ర మరణం కథపై పెద్ద ప్రభావాన్ని చూపుతుంది, కానీ కూడా
+                మీతో అనుబంధించబడిన పాత్రల చరిత్ర. <br />
+                - ఆటగాళ్ళు పునరుత్థానం చేయలేరు లేదా మరణాన్ని ఊహించలేరు
+                ఇది బాగా ఆడిన RP. <br />
+                - రీబూట్ చేసిన తర్వాత 10 నిమిషాల రోగనిరోధక శక్తి నిషేధించబడిన చోట వర్తిస్తుంది
+                దోపిడీలు, దొంగతనాలు, తద్వారా ఏదైనా ఆటగాడు సర్వర్‌లోకి ప్రవేశించవచ్చు మరియు
+                మిగిలిన ఆట కోసం నిర్వహించండి. & nbsp;
               </p>
             </li>
             <li>
@@ -491,27 +649,27 @@
                 <i class="fas fa-question"></i>Interakcje
               </h2>
               <p>
-                Podczas rozgrywki na FiveCity wejdziesz w interakcje z całą gamą
-                różnych postaci, od przeciętnych obywateli, gangsterów, po
-                policjantów. Celem, jest stworzenie sobie nawzajem immersyjnego
-                środowiska, gdzie dajemy sobie nawzajem nowe scenariusze.<br />
-                INTERAKCJA Z EMS: Jeśli jesteś na BW (przez wypadek lub zbrodnie
-                popełnioną na tobie) musisz poczekać na przybycie Policji albo
-                EMS, ewentualnie ktoś może cię zawieźć na szpital. EMS udziela
-                profesjonalnej pomocy, jak i gracze odgrywający starają się
-                sumiennie odgrywać swoje postacie. Pamiętaj - zawsze staraj się
-                odgrywać głosowo. Komenda /me ma być tylko dodatkiem, który
-                pomoże wczuć Ci się w świat gry. Medycy mają prawo do lekkiego
-                powergamingu, który nie blokuje postaci poszkodowanemu.<br />
-                Z POLICJĄ: Policja jest zobowiązana do profesjonalnego podejścia
-                do obywateli miasta i siebie nawzajem, obywatele są zobowiązani
-                do przestrzegania bazowego poziomu szacunku do policji, jaki
-                panuje w Stanach Zjednoczonych.<br />
-                - Kiedy zostaniesz położony lub aresztowany przez policję,
-                kończy się scenariusz ucieczki i zaczynasz scenariusz bycia
-                aresztowanym.<br />
-                Sprawiedliwie podchodźcie do swoich scenariuszy i twórzcie
-                świat, gdzie każda strona barykady ma równe szanse.
+                ఫైవ్‌సిటీని ప్లే చేస్తున్నప్పుడు, మీరు మొత్తం రేంజ్‌తో ఇంటరాక్ట్ అవుతారు
+                విభిన్న పాత్రలు, సగటు పౌరులు, గ్యాంగ్‌స్టర్ల నుండి
+                పోలీసులు. ఒకరినొకరు లీనమయ్యేలా చేయడమే లక్ష్యం
+                మేము ఒకరికొకరు కొత్త దృశ్యాలను అందించే వాతావరణం. <br />
+                EMSతో పరస్పర చర్య: మీరు BWలో ఉంటే (ప్రమాదం లేదా నేరం ద్వారా
+                మీపై కట్టుబడి) మీరు పోలీసుల రాక కోసం వేచి ఉండాలి లేదా
+                EMS, లేదా ఎవరైనా మిమ్మల్ని ఆసుపత్రికి తీసుకెళ్లవచ్చు. EMS మంజూరు
+                వృత్తిపరమైన సహాయం మరియు ఆటగాళ్ళు తమ వంతు ప్రయత్నం చేస్తున్నారు
+                మీ పాత్రలను మనస్సాక్షిగా నటించండి. గుర్తుంచుకో - ఎల్లప్పుడూ ప్రయత్నించండి
+                వాయిస్ ద్వారా ప్లే. కమాండ్ / me అనేది కేవలం ఒక యాడ్-ఆన్ మాత్రమే
+                ఆట ప్రపంచంతో సానుభూతి పొందడంలో మీకు సహాయం చేస్తుంది. వైద్యులకు వెలుగు హక్కు ఉంది
+                బాధితుడిని నిరోధించని పవర్‌గేమింగ్. <br />
+                పోలీసులతో: పోలీసులు వృత్తిపరమైన విధానానికి కట్టుబడి ఉంటారు
+                నగర పౌరులకు మరియు ఒకరికొకరు, పౌరులు ఒక బాధ్యతలో ఉన్నారు
+                పోలీసుల పట్ల గౌరవం యొక్క ప్రాథమిక స్థాయిని గౌరవించడం
+                యునైటెడ్ స్టేట్స్ లో ప్రబలంగా ఉంది. <br />
+                - మిమ్మల్ని పోలీసులు నిర్బంధించినప్పుడు లేదా అరెస్టు చేసినప్పుడు,
+                తప్పించుకునే దృశ్యం ముగుస్తుంది మరియు మీరు బీయింగ్ దృష్టాంతాన్ని ప్రారంభిస్తారు
+                అరెస్టు. <br />
+                మీ దృశ్యాలకు న్యాయంగా ఉండండి మరియు సృష్టించండి
+                బారికేడ్ యొక్క ప్రతి వైపు సమాన అవకాశాలు ఉన్న ప్రపంచం.
               </p>
             </li>
             <li>
@@ -521,41 +679,27 @@
                 <i class="fas fa-question"></i>Przestępcy
               </h2>
               <p>
-                Kilka rzeczy, które powinniście mieć na uwadze przy odgrywaniu
-                postaci ze świata przestępczego:<br />
-                - Odgrywaj powoli, nie śpiesz się, nie powinieneś zostać
-                największym gangusem w mieście w ciągu jednego dnia. Pozwól
-                swojej postaci na rozwój i poznawanie tego świata, zdobywanie
-                kontaktów itp.<br />
-                - UWAGA POLICJA: weź pod uwagę to, że jeśli twoja postać będzie
-                popełniała przestępstwa, na pewno zwróci na siebie uwagę
-                policji. Policja może podjąć wiele kroków, aby cię schwytać. Rób
-                odstępy czasu pomiędzy swoimi akcjami, jeśli nie chcesz, aby
-                policja mocniej reagowała na twoje przestępstwa. Częste
-                podejmowanie działań związanych z crime może się przełożyć na
-                mocniejszej reakcji funkcjonariuszy oraz dłuższe wyroki.<br />
-                - Przestępcza Hierarchia: z czasem twoja postać może się wspinać
-                w hierarchii kryminalnej w mieście, ale zanim to zrobi,
-                powinieneś mieć na uwadze tworzenie kontaktów oraz szacunek dla
-                osób, które są w tej hierarchii wyżej, poznawaj po prostu ten
-                świat i nie bądź od razu kozakiem.<br />
-                - Konflikt: Jako że niektóre organizacje mogą ze sobą
-                współpracować od czasu do czasu, konflikt jest przewidywany.
-                Terytoria, zasoby, konsumenci i siła w mieście z pewnością
-                będzie kierowała w stronę konfliktu. Konflikt i współpraca w
-                obydwu przypadkach tworzą ciekawe scenariusze, upewnij się, że
-                tworzysz obydwa. Omijaj tworzenie zbyt dużych sojuszy, które nie
-                pozwalają na rozwijanie się konfliktów.<br />
-                - W sytuacji gdzie jedna grupa osadzonych jest przygotowywana na
-                transport do więzienia, dopuszczalne jest, aby kolejna grupa,
-                stosująca się do limitu osobowego mogła się utworzyć. Odbicia
-                bez szerszego planu lub bez odpowiedniego uzbrojenia będą
-                uznawane, jako nieposzanowanie życia.<br />
-                - Podczas scenariusza napadu na bank, gracz powinien poczekać na
-                przyjazd policji, aby w pełni rozegrać scenariusz napadu.
-                Mechanika napadów na bank nie służy tylko do zarobienia
-                pieniędzy, ale również ma stwarzać ciekawy oraz kreatywny
-                scenariusz Roleplay.
+                ఫైవ్‌సిటీని ప్లే చేస్తున్నప్పుడు, మీరు మొత్తం రేంజ్‌తో ఇంటరాక్ట్ అవుతారు
+                విభిన్న పాత్రలు, సగటు పౌరులు, గ్యాంగ్‌స్టర్ల నుండి
+                పోలీసులు. ఒకరినొకరు లీనమయ్యేలా చేయడమే లక్ష్యం
+                మేము ఒకరికొకరు కొత్త దృశ్యాలను అందించే వాతావరణం. <br />
+                EMSతో పరస్పర చర్య: మీరు BWలో ఉంటే (ప్రమాదం లేదా నేరం ద్వారా
+                మీపై కట్టుబడి) మీరు పోలీసుల రాక కోసం వేచి ఉండాలి లేదా
+                EMS, లేదా ఎవరైనా మిమ్మల్ని ఆసుపత్రికి తీసుకెళ్లవచ్చు. EMS మంజూరు
+                వృత్తిపరమైన సహాయం మరియు ఆటగాళ్ళు తమ వంతు ప్రయత్నం చేస్తున్నారు
+                మీ పాత్రలను మనస్సాక్షిగా నటించండి. గుర్తుంచుకో - ఎల్లప్పుడూ ప్రయత్నించండి
+                వాయిస్ ద్వారా ప్లే. కమాండ్ / me అనేది కేవలం ఒక యాడ్-ఆన్ మాత్రమే
+                ఆట ప్రపంచంతో సానుభూతి పొందడంలో మీకు సహాయం చేస్తుంది. వైద్యులకు వెలుగు హక్కు ఉంది
+                బాధితుడిని నిరోధించని పవర్‌గేమింగ్. <br />
+                పోలీసులతో: పోలీసులు వృత్తిపరమైన విధానానికి కట్టుబడి ఉంటారు
+                నగర పౌరులకు మరియు ఒకరికొకరు, పౌరులు ఒక బాధ్యతలో ఉన్నారు
+                పోలీసుల పట్ల గౌరవం యొక్క ప్రాథమిక స్థాయిని గౌరవించడం
+                యునైటెడ్ స్టేట్స్ లో ప్రబలంగా ఉంది. <br />
+                - మిమ్మల్ని పోలీసులు నిర్బంధించినప్పుడు లేదా అరెస్టు చేసినప్పుడు,
+                తప్పించుకునే దృశ్యం ముగుస్తుంది మరియు మీరు బీయింగ్ దృష్టాంతాన్ని ప్రారంభిస్తారు
+                అరెస్టు. <br />
+                మీ దృశ్యాలకు న్యాయంగా ఉండండి మరియు సృష్టించండి
+                బారికేడ్ యొక్క ప్రతి వైపు సమాన అవకాశాలు ఉన్న ప్రపంచం.
               </p>
             </li>
             <li>
@@ -565,16 +709,16 @@
                 <i class="fas fa-question"></i>Środowisko
               </h2>
               <p>
-                Życie naszej postaci odgrywamy w Stanie San Andreas, jest to
-                Stan zamieszkiwany przez kilka milionów osób i wasze postacie są
-                cząstką tego miasta, o czym musimy pamiętać.<br />
-                - Postacie odgrywane w San Andreas mogą być przeróżne, ale
-                musimy jednak pamiętać, że mieszkamy w Stanie bliskim realizmy,
-                czyli na przykład; jeśli gracz postanowi zostać seryjnym
-                mordercą z problemami psychicznymi, który leci i zabija każdego
-                po kolei, musi być przygotowany, że taka postać niezbyt długo
-                będzie stąpała po tym mieście oraz Służby Prawa zrobią wszystko,
-                aby taka postać została ukarana jak najbardziej surowo.
+                మేము శాన్ ఆండ్రియాస్ రాష్ట్రంలో మా పాత్ర జీవితాన్ని పోషిస్తాము, ఇదే
+                 అనేక మిలియన్ల మంది ప్రజలు నివసించే రాష్ట్రం మరియు మీ పాత్రలు
+                 ఈ నగరం యొక్క భాగం, మనం గుర్తుంచుకోవాలి. <br />
+                 - శాన్ ఆండ్రియాస్‌లో పోషించిన పాత్రలు అన్ని రకాలుగా ఉంటాయి, కానీ
+                 అయినప్పటికీ, మనం వాస్తవికతకు దగ్గరగా ఉన్న స్థితిలో జీవిస్తున్నామని గుర్తుంచుకోవాలి,
+                 అంటే, ఉదాహరణకు; ఆటగాడు సీరియల్ కావాలని నిర్ణయించుకుంటే
+                 ఎగిరిపోయి అందరినీ చంపే మానసిక కిల్లర్
+                 ప్రతిగా, అటువంటి వ్యక్తి చాలా పొడవుగా ఉండకూడదని సిద్ధం చేయాలి
+                 ఈ నగరం చుట్టూ తిరుగుతుంది మరియు లా సర్వీసెస్ ప్రతిదీ చేస్తుంది
+                 అలాంటి పాత్రను వీలైనంత కఠినంగా శిక్షిస్తానని.
               </p>
             </li>
             <li>
@@ -582,13 +726,13 @@
               <i class="arrow"></i>
               <h2 class="accordion-h2"><i class="fas fa-question"></i>Gra</h2>
               <p>
-                - Mechanika Gry: Gracze nie powinni nadużywać mechaniki gry w
-                sposób, któremu nie służą, tylko po to, aby uzyskać przewagę dla
-                siebie i nie tworzyć z tego scenariuszy RP.<br />
-                - Nagrywanie: Gracze mogą robić zdjęcia oraz nagrywać telefonami
-                obraz oraz dźwięk, przy używaniu odpowiedniej animacji. Dźwięk
-                może być użyty, jeśli jesteś w obrębie słyszenia drugiej osoby,
-                nie bierze się pod uwagę dźwięków zza ścian/szkła.<br />
+                - గేమ్ మెకానిక్స్: ఆటగాళ్ళు గేమ్ మెకానిక్‌లను దుర్వినియోగం చేయకూడదు
+                 వారు కేవలం ఒక అంచుని పొందడానికి సేవ చేయని మార్గం
+                 మీరే మరియు దాని నుండి RP దృశ్యాలను సృష్టించవద్దు. <br />
+                 - రికార్డ్: ఆటగాళ్ళు తమ ఫోన్‌లతో ఫోటోలు తీయవచ్చు మరియు రికార్డ్ చేయవచ్చు
+                 చిత్రం మరియు ధ్వని, తగిన యానిమేషన్ ఉపయోగించి. ధ్వని
+                 మీరు అవతలి వ్యక్తి వినికిడిలో ఉన్నప్పుడు ఉపయోగించవచ్చు
+                 గోడలు / గాజు వెనుక నుండి శబ్దాలు పరిగణనలోకి తీసుకోబడతాయి.<br />
               </p>
             </li>
             <li>
@@ -604,7 +748,7 @@
                 <span style="color: #dddddd">Klasa 4 - 14 dniowy ban</span
                 ><br />
                 <span style="color: #c0392b"
-                  >Klasa 5 - Perm (można odwołać się po 30 dniach)</span
+                  >Klasa 5 - Perm</span
                 >
               </p>
             </li>

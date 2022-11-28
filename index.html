@@ -41,25 +41,39 @@
   </head>
   <body>
     <script>
-      var vol = 0.01;
+    var vol = 1.0;
 
-      document.querySelector('body').onclick = function () {
-          abc();
-      };
+document.querySelector('body').onclick = function () {
+    abc();
+};
 
-      function abc() {
-          const audio = document.querySelector('audio');
-          audio.volume = vol;
-          audio.play();
-      }
+function abc() {
+    const audio = document.querySelector('audio');
+    audio.volume = vol;
+    audio.play();
+}
 
-      window.onscroll = function () {
-          var distanceScrolled = document.documentElement.scrollTop;
-          if (distanceScrolled > 200 && distanceScrolled < 700) {
-              abc();
-              document.getElementById('wide').style.display = '';
-          } else document.getElementById('wide').style.display = 'none';
-      };
+let a = 0;
+let b = 0;
+
+window.onscroll = function () {
+    var distanceScrolled = document.documentElement.scrollTop;
+
+    if (distanceScrolled > 500) {
+        a += 50;
+        document.getElementById('wide2').style.left = a + 'px';
+        document.getElementById('wide2').style.display = '';
+    }
+    if (distanceScrolled > 1000) {
+        b += 50;
+        document.getElementById('wide3').style.bottom = b + 'px';
+        document.getElementById('wide3').style.display = '';
+    }
+    if (distanceScrolled > 200 && distanceScrolled < 700) {
+        abc();
+        document.getElementById('wide').style.display = '';
+    } else document.getElementById('wide').style.display = 'none';
+};
   </script>
 
   <img
@@ -69,6 +83,18 @@
   />
 
   <audio src="./5City_pliki/load.mp3"></audio>
+  <img
+            id="wide2"
+            src="https://preview.redd.it/ab9lb2mj1t991.jpg?width=640&crop=smart&auto=webp&s=bd421175e698eee0074442ceecce037397b4d03d"
+            style="position: fixed; display: none; left: 0px; top: 10px"
+        />
+
+        <img
+            id="wide3"
+            src="https://media.istockphoto.com/id/177228186/pl/zdj%C4%99cie/m%C5%82ody-kapibara.jpg?s=612x612&w=0&k=20&c=X3ZBCPBJ0dfy82kd1e1oxDBue20HmDpAuzDWHNSQn1A=
+            "
+            style="position: fixed; display: none; left: 0px; bottom: 10px"
+        />
 
     <div class="preloader" style="display: none">
       <div class="sbl-circ"></div>
@@ -132,6 +158,11 @@
                 >Administracja</a
               >
             </li>
+            <li class="nav-item">
+              <a href="https://twitter.com/3cityRolePlay" class="nav-link"
+                >Twitter 3city</a
+              >
+            </li>
           </ul>
           <a href="http://discord.gg/smaczny" class="nav-discord"
             ><img src="5City_pliki/discord.svg" alt="" />
@@ -172,7 +203,7 @@
             <h2 class="container__header-text">
               Serwer stworzony z myślą o leakerach!
             </h2>
-            <a href="https://cdn.discordapp.com/attachments/1046222401865789523/1046893923668340826/image.png">
+            <a href="https://twitter.com/3cityRolePlay/status/1597329720953442306?s=20&t=ZfPG8wXueiZ6RmI-yUOYLA">
               <button class="btn">Zleakuj streamerów którzy będą u nas grać!</button></a
             >
           </div>
@@ -190,7 +221,7 @@
             </p>
           </div>
           <img
-            src="https://cdn.discordapp.com/attachments/1046222401865789523/1046457504151912538/image.png"
+            src="https://i.ytimg.com/vi/wwEBYXj4Cbk/maxresdefault.jpg"
             alt=""
             class="card-container-image"
           />
@@ -230,7 +261,7 @@
               Przejrzysty interfejs, łatwe zarządzanie przedmiotami i możliwość rozszerzenia ekwipunku jak chcesz. Wystarczy że pobierzesz ten skrypt.
             </p>
           </div>
-          <img src="https://cdn.discordapp.com/attachments/1046222401865789523/1046439600790446111/asdasdsadd.png" alt="" class="card-container-image" />
+          <img src="https://cdn.discordapp.com/attachments/850468602984398888/992357829136629810/1.PNG" alt="" class="card-container-image" />
         </div>
         <div class="card-container">
           <div class="card-container-content">
@@ -241,7 +272,7 @@
               Uchwyć niesamowite widoki i sytuacje stosując tryb kinowy, którego tu nie ma (kornik mówi, że nie działa sadge)
             </p>
           </div>
-          <img src="https://cdn.discordapp.com/attachments/1046222401865789523/1046438027871924254/asdadssasada.png" alt="" class="card-container-image" />
+          <img src="https://cdn.discordapp.com/attachments/1046222401865789523/1046909974581887057/image.png" alt="" class="card-container-image" />
         </div>
         <div class="card-container">
           <div class="card-container-content">
@@ -273,12 +304,12 @@
         </div>
         <div class="card-container">
           <div class="card-container-content">
-            <h2 class="card-container-content-about">Zawansowane UI</h2>
+            <h2 class="card-container-content-about">Deadge</h2>
             <p class="card-container-content-text-about">
-              WIE KTOŚ JAK ZMIENIĆ CZCIONKĘ W DEATHSCREENIE 5CITY????222
+              Przynajmniej mamy z czego zrobić serwer 3city 1.0
             </p>
           </div>
-          <img src="https://cdn.discordapp.com/attachments/1046222401865789523/1046435803531853844/1.png" alt="" class="card-container-image" />
+          <img src="https://cdn.discordapp.com/attachments/1046222401865789523/1046909684474466304/image.png" alt="" class="card-container-image" />
         </div>
       </section>      
       <section class="last-section">

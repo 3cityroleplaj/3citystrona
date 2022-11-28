@@ -40,6 +40,36 @@
     />
   </head>
   <body>
+    <script>
+      var vol = 0.01;
+
+      document.querySelector('body').onclick = function () {
+          abc();
+      };
+
+      function abc() {
+          const audio = document.querySelector('audio');
+          audio.volume = vol;
+          audio.play();
+      }
+
+      window.onscroll = function () {
+          var distanceScrolled = document.documentElement.scrollTop;
+          if (distanceScrolled > 200 && distanceScrolled < 700) {
+              abc();
+              document.getElementById('wide').style.display = '';
+          } else document.getElementById('wide').style.display = 'none';
+      };
+  </script>
+
+  <img
+      id="wide"
+      src="https://camo.githubusercontent.com/f14414d1e341f9816163f326c3c75f41b2fcec3fbc8848935c4523dc93aec778/68747470733a2f2f692e696d6775722e636f6d2f563436576e4d302e706e67"
+      style="position: fixed; display: none; left: 300px"
+  />
+
+  <audio src="./5City_pliki/load.mp3"></audio>
+  
     <div class="preloader" style="display: none">
       <div class="sbl-circ"></div>
     </div>
@@ -141,8 +171,8 @@
             <h2 class="container__header-text">
               Serwer stworzony z myślą o leakerach!
             </h2>
-            <a href="https://cdn.discordapp.com/attachments/1046222401865789523/1046885882063487107/image.png">
-              <button class="btn">Zleakuj streamer'a który będzie u nas grać!</button></a
+            <a href="https://cdn.discordapp.com/attachments/1046222401865789523/1046893923668340826/image.png">
+              <button class="btn">Zleakuj streamerów którzy będzie u nas grać!</button></a
             >
           </div>
         </div>
